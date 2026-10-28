@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}Catatan APRILcell{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/fontawesome/css/all.min.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -13,18 +14,18 @@
   <aside class="sidebar d-none d-md-flex flex-column">
     <div class="brand">Catatan <span>APRILcell</span></div>
     <nav class="nav flex-column gap-1">
-      <a class="nav-link" href="{{ url_for('dashboard.index') }}">Dashboard</a>
-      <a class="nav-link" href="{{ url_for('accounts.index') }}">Saldo Semua Rekening</a>
-      <a class="nav-link" href="{{ url_for('transactions.tambah') }}">Transaksi Saldo</a>
-      <a class="nav-link" href="{{ url_for('transfers.index') }}">Transfer Antar-Rekening</a>
-      <a class="nav-link" href="{{ url_for('debts.index') }}">Buku Utang dan Piutang</a>
-      <a class="nav-link" href="{{ url_for('expenses.index') }}">Pengeluaran Harian</a>
-      <a class="nav-link" href="{{ url_for('uncollected.index') }}">Uang Masuk Belum Diambil</a>
-      <a class="nav-link" href="{{ url_for('reports.index') }}">Laporan Keuangan</a>
-      <a class="nav-link" href="{{ url_for('transactions.index') }}">Riwayat Transaksi</a>
-      <a class="nav-link" href="{{ url_for('backup.index') }}">Backup dan Restore</a>
-      <a class="nav-link" href="{{ url_for('settings.index') }}">Pengaturan</a>
-      <a class="nav-link text-danger" href="{{ url_for('auth.logout') }}">Logout ({{ current_username }})</a>
+      <a class="nav-link" href="{{ url_for('dashboard.index') }}"><i class="fa-solid fa-house me-2"></i>Dashboard</a>
+      <a class="nav-link" href="{{ url_for('accounts.index') }}"><i class="fa-solid fa-wallet me-2"></i>Saldo Semua Rekening</a>
+      <a class="nav-link" href="{{ url_for('transactions.tambah') }}"><i class="fa-solid fa-money-bill-transfer me-2"></i>Transaksi Saldo</a>
+      <a class="nav-link" href="{{ url_for('transfers.index') }}"><i class="fa-solid fa-arrow-right-arrow-left me-2"></i>Transfer Antar-Rekening</a>
+      <a class="nav-link" href="{{ url_for('debts.index') }}"><i class="fa-solid fa-book me-2"></i>Buku Utang dan Piutang</a>
+      <a class="nav-link" href="{{ url_for('expenses.index') }}"><i class="fa-solid fa-receipt me-2"></i>Pengeluaran Harian</a>
+      <a class="nav-link" href="{{ url_for('uncollected.index') }}"><i class="fa-solid fa-hand-holding-dollar me-2"></i>Uang Masuk Belum Diambil</a>
+      <a class="nav-link" href="{{ url_for('reports.index') }}"><i class="fa-solid fa-chart-column me-2"></i>Laporan Keuangan</a>
+      <a class="nav-link" href="{{ url_for('transactions.index') }}"><i class="fa-solid fa-clock-rotate-left me-2"></i>Riwayat Transaksi</a>
+      <a class="nav-link" href="{{ url_for('backup.index') }}"><i class="fa-solid fa-database me-2"></i>Backup dan Restore</a>
+      <a class="nav-link" href="{{ url_for('settings.index') }}"><i class="fa-solid fa-gear me-2"></i>Pengaturan</a>
+      <a class="nav-link text-danger" href="{{ url_for('auth.logout') }}"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout ({{ current_username }})</a>
     </nav>
   </aside>
   <main class="main-content">
@@ -43,24 +44,24 @@
 </div>
 {% if current_user_id %}
 <nav class="bottom-nav d-md-none">
-  <a href="{{ url_for('dashboard.index') }}"><span>🏠</span>Dashboard</a>
-  <a href="{{ url_for('accounts.index') }}"><span>💰</span>Saldo</a>
-  <a href="{{ url_for('transactions.tambah') }}"><span>➕</span>Transaksi</a>
-  <a href="{{ url_for('expenses.index') }}"><span>🧾</span>Keluar</a>
-  <button type="button" data-bs-toggle="offcanvas" data-bs-target="#moreMenu"><span>☰</span>Lainnya</button>
+  <a href="{{ url_for('dashboard.index') }}"><i class="fa-solid fa-house"></i>Dashboard</a>
+  <a href="{{ url_for('accounts.index') }}"><i class="fa-solid fa-wallet"></i>Saldo</a>
+  <a href="{{ url_for('transactions.tambah') }}"><i class="fa-solid fa-circle-plus"></i>Transaksi</a>
+  <a href="{{ url_for('expenses.index') }}"><i class="fa-solid fa-receipt"></i>Keluar</a>
+  <button type="button" data-bs-toggle="offcanvas" data-bs-target="#moreMenu"><i class="fa-solid fa-bars"></i>Lainnya</button>
 </nav>
 <div class="offcanvas offcanvas-bottom" tabindex="-1" id="moreMenu">
   <div class="offcanvas-header"><h5>Menu Lainnya</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button></div>
   <div class="offcanvas-body">
     <div class="list-group">
-      <a class="list-group-item" href="{{ url_for('transfers.index') }}">Transfer Antar-Rekening</a>
-      <a class="list-group-item" href="{{ url_for('debts.index') }}">Buku Utang dan Piutang</a>
-      <a class="list-group-item" href="{{ url_for('uncollected.index') }}">Uang Masuk Belum Diambil</a>
-      <a class="list-group-item" href="{{ url_for('reports.index') }}">Laporan Keuangan</a>
-      <a class="list-group-item" href="{{ url_for('transactions.index') }}">Riwayat Transaksi</a>
-      <a class="list-group-item" href="{{ url_for('backup.index') }}">Backup dan Restore</a>
-      <a class="list-group-item" href="{{ url_for('settings.index') }}">Pengaturan</a>
-      <a class="list-group-item text-danger" href="{{ url_for('auth.logout') }}">Logout</a>
+      <a class="list-group-item" href="{{ url_for('transfers.index') }}"><i class="fa-solid fa-arrow-right-arrow-left me-2"></i>Transfer Antar-Rekening</a>
+      <a class="list-group-item" href="{{ url_for('debts.index') }}"><i class="fa-solid fa-book me-2"></i>Buku Utang dan Piutang</a>
+      <a class="list-group-item" href="{{ url_for('uncollected.index') }}"><i class="fa-solid fa-hand-holding-dollar me-2"></i>Uang Masuk Belum Diambil</a>
+      <a class="list-group-item" href="{{ url_for('reports.index') }}"><i class="fa-solid fa-chart-column me-2"></i>Laporan Keuangan</a>
+      <a class="list-group-item" href="{{ url_for('transactions.index') }}"><i class="fa-solid fa-clock-rotate-left me-2"></i>Riwayat Transaksi</a>
+      <a class="list-group-item" href="{{ url_for('backup.index') }}"><i class="fa-solid fa-database me-2"></i>Backup dan Restore</a>
+      <a class="list-group-item" href="{{ url_for('settings.index') }}"><i class="fa-solid fa-gear me-2"></i>Pengaturan</a>
+      <a class="list-group-item text-danger" href="{{ url_for('auth.logout') }}"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
     </div>
   </div>
 </div>
