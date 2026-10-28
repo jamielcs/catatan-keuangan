@@ -1,0 +1,13 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+instance/*.db
+instance/*.db-*
+instance/secret_key.txt
+instance/secret*
+backups/*.db
+backups/*.sqlite
+*.log
+.env
