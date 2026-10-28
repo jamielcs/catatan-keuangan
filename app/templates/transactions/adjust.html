@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block content %}<h4>Penyesuaian Saldo</h4><form method="post" class="card p-3"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="mb-3"><label class="form-label">Rekening</label><select class="form-select" name="account_id" required>{% for a in accounts %}<option value="{{ a.id }}">{{ a.name }} — {{ a.balance|rupiah }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label">Saldo Target (Rp)</label><input class="form-control" name="target_balance" inputmode="decimal" required></div>
+<div class="mb-3"><label class="form-label">Alasan (wajib, masuk audit)</label><input class="form-control" name="reason" required></div>
+<div class="mb-3"><label class="form-label">Tanggal</label><input type="date" class="form-control" name="date"></div>
+<button class="btn btn-primary">Simpan Penyesuaian</button></form>{% endblock %}

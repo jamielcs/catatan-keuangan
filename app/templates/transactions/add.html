@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block content %}<h4>{{ 'Tambah Saldo' if mode=='tambah' else 'Kurangi Saldo' }}</h4>
+<div class="d-flex gap-2 mb-3"><a class="btn btn-success" href="{{ url_for('transactions.tambah') }}">Tambah</a><a class="btn btn-danger" href="{{ url_for('transactions.kurangi') }}">Kurangi</a><a class="btn btn-outline-primary" href="{{ url_for('transactions.penyesuaian') }}">Penyesuaian</a></div>
+<form method="post" class="card p-3"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="mb-3"><label class="form-label">Rekening</label><select class="form-select" name="account_id" required>{% for a in accounts %}<option value="{{ a.id }}">{{ a.name }} — {{ a.balance|rupiah }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label">Nominal (Rp)</label><input class="form-control" name="amount" inputmode="decimal" required></div>
+<div class="mb-3"><label class="form-label">Tanggal</label><input type="date" class="form-control" name="date"></div>
+<div class="mb-3"><label class="form-label">Keterangan</label><input class="form-control" name="description"></div>
+<div class="mb-3"><label class="form-label">Catatan</label><textarea class="form-control" name="notes"></textarea></div>
+<button class="btn btn-primary">Simpan</button></form>{% endblock %}

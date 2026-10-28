@@ -1,0 +1,16 @@
+{% extends 'base.html' %}{% block content %}<h4>Laporan Keuangan</h4>
+<form method="get" class="card p-3 mb-3"><div class="row g-2"><div class="col-6 col-md-2"><select class="form-select" name="period"><option value="harian" {% if period=='harian' %}selected{% endif %}>Harian</option><option value="mingguan" {% if period=='mingguan' %}selected{% endif %}>Mingguan (Senin-Minggu)</option><option value="bulanan" {% if period=='bulanan' %}selected{% endif %}>Bulanan</option><option value="custom" {% if period=='custom' %}selected{% endif %}>Rentang Khusus</option></select></div>
+<div class="col-6 col-md-2"><input type="date" class="form-control" name="date_from"></div><div class="col-6 col-md-2"><input type="date" class="form-control" name="date_to"></div>
+<div class="col-6 col-md-2"><select class="form-select" name="account_id"><option value="">Semua Rekening</option>{% for a in accounts %}<option value="{{ a.id }}">{{ a.name }}</option>{% endfor %}</select></div>
+<div class="col-6 col-md-2"><select class="form-select" name="category_id"><option value="">Semua Kategori</option>{% for c in categories %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select></div>
+<div class="col-12 col-md-2 d-flex gap-2"><button class="btn btn-primary flex-fill">Tampilkan</button><a class="btn btn-outline-secondary" href="{{ url_for('reports.export_csv', period=period) }}">CSV</a><a class="btn btn-outline-secondary" href="{{ url_for('reports.print_view', period=period) }}">Cetak</a></div></div>
+<small class="text-muted">Zona waktu Asia/Jakarta. Transfer internal, pinjaman, dan pembayaran pokok piutang/utang tidak dihitung sebagai pemasukan/pengeluaran eksternal.</small></form>
+<div class="row g-2 mb-3">
+<div class="col-6 col-md-4"><div class="card p-3">Periode<br><small>{{ rep.start }} s/d {{ rep.end }}</small></div></div>
+<div class="col-6 col-md-4"><div class="card p-3">Saldo Awal Periode<br><b>{{ rep.saldo_awal|rupiah }}</b></div></div>
+<div class="col-6 col-md-4"><div class="card p-3">Saldo Akhir Periode<br><b>{{ rep.saldo_akhir|rupiah }}</b></div></div>
+<div class="col-6 col-md-4"><div class="card p-3">Pemasukan Eksternal<br><b class="text-income">{{ rep.pemasukan|rupiah }}</b></div></div>
+<div class="col-6 col-md-4"><div class="card p-3">Pengeluaran<br><b class="text-expense">{{ rep.pengeluaran|rupiah }}</b></div></div>
+<div class="col-6 col-md-4"><div class="card p-3">Transfer Internal (terpisah)<br><b>{{ rep.transfer_total|rupiah }}</b><br>Perubahan Bersih: {{ rep.perubahan|rupiah }}</div></div></div>
+<div class="card p-3 mb-3"><b>Pengeluaran per Kategori:</b> {% for k,v in rep.by_category.items() %}{{ k }} {{ v|rupiah }} · {% else %}Tidak ada{% endfor %}<br><b>Pengeluaran per Orang:</b> {% for k,v in rep.by_person.items() %}{{ k }} {{ v|rupiah }} · {% else %}Tidak ada{% endfor %}<br><b>Pemasukan per Rekening:</b> {% for k,v in rep.by_account.items() %}{{ k }} {{ v|rupiah }} · {% else %}Tidak ada{% endfor %}</div>
+<h5>Rincian Transaksi</h5>{% for t in rep.transactions %}<div class="tx-card d-flex justify-content-between"><div>{{ t.description }}<br><small class="text-muted">{{ t.date }} · {{ t.type }} · {{ t.account.short_name if t.account else '' }}</small></div><div class="money">{{ t.signed_amount|rupiah }}</div></div>{% else %}<p>Tidak ada transaksi di periode ini.</p>{% endfor %}{% endblock %}

@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block content %}<h4>{{ debt.person.name }} — {{ debt.direction }}</h4><div class="card p-3 mb-3">Pokok {{ debt.principal|rupiah }} · Dibayar {{ debt.paid_amount|rupiah }} · <b>Sisa {{ debt.remaining|rupiah }}</b> · Status {{ debt.status }}</div>
+{% if debt.remaining>0 %}<form method="post" action="{{ url_for('debts.pay', debt_id=debt.id) }}" class="card p-3 mb-3"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="mb-3"><label class="form-label">Rekening {% if debt.direction=='piutang' %}Penerima{% else %}Sumber{% endif %}</label><select class="form-select" name="account_id" required>{% for a in accounts %}<option value="{{ a.id }}">{{ a.name }} — {{ a.balance|rupiah }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label">Nominal Pembayaran</label><input class="form-control" name="amount" inputmode="decimal" required></div>
+<button class="btn btn-primary">Catat Pembayaran</button></form>{% endif %}
+<h5>Riwayat Pembayaran</h5>{% for p in debt.payments %}<div class="tx-card d-flex justify-content-between"><span>{{ p.date }} · {{ p.account.short_name if p.account else '' }}</span><b>{{ p.amount|rupiah }}</b></div>{% else %}<p>Belum ada pembayaran.</p>{% endfor %}{% endblock %}

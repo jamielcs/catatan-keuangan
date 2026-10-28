@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block content %}<h4>Transfer Antar-Rekening</h4>
+<form method="post" class="card p-3 mb-3"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="mb-3"><label class="form-label">Dari Rekening</label><select class="form-select" name="from_account_id" required>{% for a in accounts %}<option value="{{ a.id }}">{{ a.name }} — {{ a.balance|rupiah }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label">Ke Rekening</label><select class="form-select" name="to_account_id" required>{% for a in accounts %}<option value="{{ a.id }}">{{ a.name }} — {{ a.balance|rupiah }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label">Nominal (Rp)</label><input class="form-control" name="amount" inputmode="decimal" required></div>
+<div class="mb-3"><label class="form-label">Tanggal</label><input type="date" class="form-control" name="date"></div>
+<div class="mb-3"><label class="form-label">Keterangan</label><input class="form-control" name="description"></div>
+<button class="btn btn-primary">Transfer</button><small class="d-block mt-2 text-muted">Transfer internal tidak mengubah total saldo dan tidak dihitung pemasukan/pengeluaran.</small></form>
+<h5>Riwayat Transfer</h5>{% for tr in transfers %}<div class="tx-card d-flex justify-content-between"><div>{{ tr.from_account.short_name }} → {{ tr.to_account.short_name }}<br><small class="text-muted">{{ tr.date }} · {{ tr.description }}</small></div><div class="money">{{ tr.amount|rupiah }}</div></div>{% else %}<p>Belum ada transfer.</p>{% endfor %}{% endblock %}

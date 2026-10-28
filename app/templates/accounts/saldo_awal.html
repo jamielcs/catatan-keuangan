@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block content %}<h4>Saldo Awal — {{ account.name }}</h4><p>Saldo saat ini: <b>{{ account.balance|rupiah }}</b>. Isi saldo awal sesuai kenyataan, jangan dikarang.</p><form method="post" class="card p-3"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="mb-3"><label class="form-label">Saldo Awal (Rp)</label><input class="form-control" name="amount" inputmode="decimal" required placeholder="1500000"></div>
+<div class="mb-3"><label class="form-label">Tanggal</label><input type="date" class="form-control" name="date"></div>
+<button class="btn btn-primary">Simpan Saldo Awal</button></form>{% endblock %}

@@ -1,0 +1,2 @@
+{% extends 'base.html' %}{% block content %}<h4>{{ item.source_name }}</h4><div class="card p-3 mb-3">Total {{ item.amount|rupiah }} · Diterima {{ item.received_amount|rupiah }} · Sisa {{ item.remaining|rupiah }} · {{ item.status }}</div>
+{% for p in item.payments %}<div class="tx-card d-flex justify-content-between"><span>{{ p.date }} · {{ p.account.short_name if p.account else '' }}</span><b>{{ p.amount|rupiah }}</b></div>{% else %}<p>Belum ada penerimaan.</p>{% endfor %}{% endblock %}

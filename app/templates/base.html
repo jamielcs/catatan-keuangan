@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Catatan APRILcell{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+{% if current_user_id %}
+<div class="app-shell">
+  <aside class="sidebar d-none d-md-flex flex-column">
+    <div class="brand">Catatan <span>APRILcell</span></div>
+    <nav class="nav flex-column gap-1">
+      <a class="nav-link" href="{{ url_for('dashboard.index') }}">Dashboard</a>
+      <a class="nav-link" href="{{ url_for('accounts.index') }}">Saldo Semua Rekening</a>
+      <a class="nav-link" href="{{ url_for('transactions.tambah') }}">Transaksi Saldo</a>
+      <a class="nav-link" href="{{ url_for('transfers.index') }}">Transfer Antar-Rekening</a>
+      <a class="nav-link" href="{{ url_for('debts.index') }}">Buku Utang dan Piutang</a>
+      <a class="nav-link" href="{{ url_for('expenses.index') }}">Pengeluaran Harian</a>
+      <a class="nav-link" href="{{ url_for('uncollected.index') }}">Uang Masuk Belum Diambil</a>
+      <a class="nav-link" href="{{ url_for('reports.index') }}">Laporan Keuangan</a>
+      <a class="nav-link" href="{{ url_for('transactions.index') }}">Riwayat Transaksi</a>
+      <a class="nav-link" href="{{ url_for('backup.index') }}">Backup dan Restore</a>
+      <a class="nav-link" href="{{ url_for('settings.index') }}">Pengaturan</a>
+      <a class="nav-link text-danger" href="{{ url_for('auth.logout') }}">Logout ({{ current_username }})</a>
+    </nav>
+  </aside>
+  <main class="main-content">
+{% else %}
+<main class="auth-main">
+{% endif %}
+    <div class="container-fluid py-3">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for cat, msg in messages %}
+      <div class="alert alert-{{ cat if cat!='message' else 'info' }} alert-dismissible fade show" role="alert">{{ msg }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    </div>
+  </main>
+</div>
+{% if current_user_id %}
+<nav class="bottom-nav d-md-none">
+  <a href="{{ url_for('dashboard.index') }}"><span>🏠</span>Dashboard</a>
+  <a href="{{ url_for('accounts.index') }}"><span>💰</span>Saldo</a>
+  <a href="{{ url_for('transactions.tambah') }}"><span>➕</span>Transaksi</a>
+  <a href="{{ url_for('expenses.index') }}"><span>🧾</span>Keluar</a>
+  <button type="button" data-bs-toggle="offcanvas" data-bs-target="#moreMenu"><span>☰</span>Lainnya</button>
+</nav>
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="moreMenu">
+  <div class="offcanvas-header"><h5>Menu Lainnya</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button></div>
+  <div class="offcanvas-body">
+    <div class="list-group">
+      <a class="list-group-item" href="{{ url_for('transfers.index') }}">Transfer Antar-Rekening</a>
+      <a class="list-group-item" href="{{ url_for('debts.index') }}">Buku Utang dan Piutang</a>
+      <a class="list-group-item" href="{{ url_for('uncollected.index') }}">Uang Masuk Belum Diambil</a>
+      <a class="list-group-item" href="{{ url_for('reports.index') }}">Laporan Keuangan</a>
+      <a class="list-group-item" href="{{ url_for('transactions.index') }}">Riwayat Transaksi</a>
+      <a class="list-group-item" href="{{ url_for('backup.index') }}">Backup dan Restore</a>
+      <a class="list-group-item" href="{{ url_for('settings.index') }}">Pengaturan</a>
+      <a class="list-group-item text-danger" href="{{ url_for('auth.logout') }}">Logout</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- Generic confirm modal (NO alert/confirm/prompt) -->
+<div class="modal fade" id="confirmModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Konfirmasi</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body" id="confirmModalBody">Yakin?</div>
+    <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button><button type="button" class="btn btn-danger" id="confirmModalBtn">Ya, Lanjutkan</button></div>
+  </div></div>
+</div>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

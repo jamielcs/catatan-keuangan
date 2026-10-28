@@ -1,0 +1,5 @@
+{% extends 'base.html' %}{% block content %}<h4>{{ 'Edit' if account else 'Tambah' }} Rekening</h4><form method="post" class="card p-3"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="mb-3"><label class="form-label">Nama</label><input class="form-control" name="name" value="{{ account.name if account else '' }}" required></div>
+<div class="mb-3"><label class="form-label">Nama Singkat</label><input class="form-control" name="short_name" value="{{ account.short_name if account else '' }}"></div>
+<div class="mb-3"><label class="form-label">Jenis</label><select class="form-select" name="account_type"><option value="bank" {% if account and account.account_type=='bank' %}selected{% endif %}>Bank</option><option value="ewallet" {% if account and account.account_type=='ewallet' %}selected{% endif %}>E-Wallet</option><option value="cash" {% if account and account.account_type=='cash' %}selected{% endif %}>Cash</option></select></div>
+<button class="btn btn-primary">Simpan</button></form>{% endblock %}

@@ -1,0 +1,2 @@
+{% extends 'base.html' %}{% block content %}<h4>{{ account.name }}</h4><div class="card p-3 mb-3">Saldo: <span class="money">{{ account.balance|rupiah }}</span> · {{ account.account_type }}</div>
+<h5>Riwayat</h5>{% for t in transactions %}<div class="tx-card d-flex justify-content-between"><div>{{ t.description }}<br><small class="text-muted">{{ t.date }} · {{ t.type }} · {{ t.status }}</small></div><div class="money">{{ t.signed_amount|rupiah }}</div></div>{% else %}<p>Belum ada transaksi.</p>{% endfor %}{% endblock %}
